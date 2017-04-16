@@ -1,5 +1,21 @@
-forestmodel 0.4.0
+forestmodel 0.4.3 (2017-04-16)
+------------------------------
+* Fixed a bug in `forest_model` which meant that non-synatic variable names (e.g. with
+  spaces in the title) were dropped from the plot.
+* Now handles character columns as factors.
+* Fixed some incompatibilities with `bind_cols` in `dplyr` 0.6.
+
+forestmodel 0.4.2 (2017-04-04)
+------------------------------
+* Fixed a couple of issues in `panel_forest_plot` that produced warnings.
+
+forestmodel 0.4.1
 -----------------
+* Fixed #5 issue regarding `coxph` models with a single predictor (thanks @vjd)
+  for identifying the bug)
+
+forestmodel 0.4.0 (2015-12-10)
+------------------------------
 * Fixed problem with `coxph` models that used special functions.
 * Changed from `forest_breaks` to `graphics::axisTicks` for break calculation.
 
