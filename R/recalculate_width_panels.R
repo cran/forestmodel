@@ -23,15 +23,21 @@ recalculate_width_panels <-
           mt[lengths(mt) == 0] <- ""
         }
         mt[mapped_data$whole_row] <- ""
-        widths <- vapply(mt, graphics::strwidth, numeric(1), "inches", cex = cex,
-                 family = family, font = fonts[i]) / recalculate_width
+        widths <- vapply(mt, graphics::strwidth, numeric(1), "inches",
+          cex = cex,
+          family = family, font = fonts[i]
+        ) / recalculate_width
       } else {
         widths <- rep(panel_positions$width[i], n_text)
       }
       if (!is.na(panel_positions$heading[i])) {
-        widths <- c(graphics::strwidth(panel_positions$heading[i], "inches", cex = cex,
-                             family = family, font = 2) / recalculate_width,
-                    widths)
+        widths <- c(
+          graphics::strwidth(panel_positions$heading[i], "inches",
+            cex = cex,
+            family = family, font = 2
+          ) / recalculate_width,
+          widths
+        )
       } else {
         widths <- c(0, widths)
       }
@@ -44,8 +50,9 @@ recalculate_width_panels <-
       for (i in unique(stats::na.omit(panel_positions$width_group))) {
         in_group <- which(panel_positions$width_group == i)
         cum_fixed_width <- cumsum(c(0, panel_positions$width[in_group[-length(in_group)]]))
-        effective_width <- apply(measured_widths[, in_group, drop = FALSE], 1, function(x)
-          max(x + cum_fixed_width))
+        effective_width <- apply(measured_widths[, in_group, drop = FALSE], 1, function(x) {
+          max(x + cum_fixed_width)
+        })
         measured_widths[, in_group[-length(in_group)]] <-
           rep(panel_positions$width[in_group[-length(in_group)]], each = n_text + 1)
         measured_widths[, in_group[length(in_group)]] <-
@@ -59,7 +66,6 @@ recalculate_width_panels <-
     if (panel_positions$width[forest_panel] < measured_widths[1, forest_panel]) {
       panel_positions$width[forest_panel] <- measured_widths[1, forest_panel]
       warning("Unable to resize forest panel to be smaller than its heading; consider a smaller text size")
-
     } else if (panel_positions$width[forest_panel] < 0.1) {
       panel_positions$width[forest_panel] <- 0.1
       warning("Unable to resize forest panel to be smaller than 10% of width")
